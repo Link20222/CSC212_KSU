@@ -1,0 +1,6 @@
+public class PQKImp<P extends Comparable<P>, T> implements PQK<P, T> {
+	public PQKImp(int k) {
+		...
+	}
+	...
+}
