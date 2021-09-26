@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.java-keywords {color: #000099; font-family: Monospaced; font-weight: bold}
+.java-layer-method {font-family: Monospaced; font-weight: bold}
+.java-block-comment {color: #737373}
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">enum</span> Order 
+{
+        preOrder, inOrder, postOrder;
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">enum</span> Relative
+{
+        Root, Parent, LeftChild, RightChild;
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> BTNode &lt;T&gt; 
+{
+    <span class="java-keywords">public</span> T data;
+    <span class="java-keywords">public</span> BTNode&lt;T&gt; left, right;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">BTNode</span>(T val)
+    {
+        data = val;
+        left = right = <span class="java-keywords">null</span>;
+    }
+    
+    <span class="java-keywords">public</span> <span class="java-layer-method">BTNode</span>(T val, BTNode&lt;T&gt; l, BTNode&lt;T&gt; r)
+    {
+        data = val;
+        left = l;
+        right = r;
+    }
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> adt;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> BT&lt;T&gt; 
+{
+    BTNode&lt;T&gt; root, current;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">BT</span>()
+    {
+        root = current = <span class="java-keywords">null</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">traverse</span>(Order ord)
+    {
+        <span class="java-keywords">switch</span> (ord)
+        {
+            <span class="java-keywords">case</span> preOrder:  <span class="java-layer-method">preorder</span>(root);
+                            <span class="java-keywords">break</span>;
+
+            <span class="java-keywords">case</span> inOrder:   <span class="java-layer-method">inorder</span>(root);
+                            <span class="java-keywords">break</span>;
+
+            <span class="java-keywords">case</span> postOrder: <span class="java-layer-method">postorder</span>(root);
+                            <span class="java-keywords">break</span>;
+        }
+
+        <span class="java-keywords">return</span>;
+    }
+    
+    <span class="java-keywords">private</span> <span class="java-keywords">void</span> <span class="java-layer-method">preorder</span>(BTNode&lt;T&gt; p)
+    {
+        <span class="java-keywords">if</span> (p != <span class="java-keywords">null</span>)
+        {
+            System.out.<span class="java-layer-method">println</span>(p.data);
+            <span class="java-layer-method">preorder</span>(p.left);
+            <span class="java-layer-method">preorder</span>(p.right);
+        }
+    }
+
+    <span class="java-keywords">private</span> <span class="java-keywords">void</span> <span class="java-layer-method">inorder</span>(BTNode&lt;T&gt; p)
+    {
+        <span class="java-keywords">if</span> (p != <span class="java-keywords">null</span>)
+        {
+            <span class="java-layer-method">inorder</span>(p.left);
+            System.out.<span class="java-layer-method">println</span>(p.data);
+            <span class="java-layer-method">inorder</span>(p.right);
+        }
+    }
+
+    <span class="java-keywords">private</span> <span class="java-keywords">void</span> <span class="java-layer-method">postorder</span>(BTNode&lt;T&gt; p)
+    {
+        <span class="java-keywords">if</span> (p != <span class="java-keywords">null</span>)
+        {
+            <span class="java-layer-method">postorder</span>(p.left);
+            <span class="java-layer-method">postorder</span>(p.right);
+            System.out.<span class="java-layer-method">println</span>(p.data);
+        }
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">empty</span>()
+    {
+        <span class="java-keywords">return</span> root == <span class="java-keywords">null</span>;
+    }
+
+    <span class="java-keywords">private</span> BTNode&lt;T&gt; <span class="java-layer-method">findparent</span>(BTNode&lt;T&gt; p)
+    {
+        LinkStack&lt;BTNode&lt;T&gt;&gt; stack = <span class="java-keywords">new</span> LinkStack&lt;BTNode&lt;T&gt;&gt;();
+        BTNode&lt;T&gt; q = root;
+
+        <span class="java-keywords">while</span> (q.right != p &amp;&amp; q.left != p)
+        {
+            <span class="java-keywords">if</span> (q.right != <span class="java-keywords">null</span>)
+                stack.<span class="java-layer-method">push</span>(q.right);
+
+            <span class="java-keywords">if</span> (q.left != <span class="java-keywords">null</span>)
+                q = q.left;
+            <span class="java-keywords">else</span>
+                q = stack.<span class="java-layer-method">pop</span>();
+        }
+
+        <span class="java-keywords">return</span> q;
+    }
+
+    <span class="java-keywords">private</span> BTNode&lt;T&gt; <span class="java-layer-method">findparent</span> (BTNode&lt;T&gt; p, BTNode&lt;T&gt; t)
+    {
+        <span class="java-keywords">if</span> (t == <span class="java-keywords">null</span>)
+                <span class="java-keywords">return</span> <span class="java-keywords">null</span>;
+
+        <span class="java-keywords">if</span> (t.right == <span class="java-keywords">null</span> &amp;&amp; t.left == <span class="java-keywords">null</span>)
+            <span class="java-keywords">return</span> <span class="java-keywords">null</span>;
+        <span class="java-keywords">else</span> <span class="java-keywords">if</span> (t.right == p || t.left == p)
+            <span class="java-keywords">return</span> t;
+        <span class="java-keywords">else</span>
+        {
+            BTNode&lt;T&gt; q = <span class="java-layer-method">findparent</span>(p, t.left);
+
+            <span class="java-keywords">if</span> (q != <span class="java-keywords">null</span>)
+                <span class="java-keywords">return</span> q;
+            <span class="java-keywords">else</span>
+                <span class="java-keywords">return</span> <span class="java-layer-method">findparent</span>(p, t.right);
+        }
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">find</span> (Relative rel)
+    {
+        <span class="java-keywords">switch</span> (rel) 
+        {
+            <span class="java-keywords">case</span> Root:  current = root;
+
+                                <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+
+            <span class="java-keywords">case</span> Parent:        <span class="java-keywords">if</span> (current == root)
+                                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                        current = <span class="java-layer-method">findparent</span>(current, root);
+
+                                        <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+
+            <span class="java-keywords">case</span> LeftChild:     <span class="java-keywords">if</span> (current.left == <span class="java-keywords">null</span>)
+                                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                         current = current.left;
+
+                                         <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+
+            <span class="java-keywords">case</span> RightChild: <span class="java-keywords">if</span> (current.right == <span class="java-keywords">null</span>)
+                                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                         current = current.right;
+
+                                         <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+        }
+
+        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">insert</span> (Relative rel, T val)
+    {
+        <span class="java-keywords">switch</span> (rel)
+        {
+                <span class="java-keywords">case</span> Root:      <span class="java-keywords">if</span> (! <span class="java-layer-method">empty</span>())
+                                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                        current = root = <span class="java-keywords">new</span> BTNode&lt;T&gt;(val);
+
+                                        <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+
+                <span class="java-keywords">case</span> Parent:<span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                <span class="java-keywords">case</span> LeftChild: <span class="java-keywords">if</span> (current.left != <span class="java-keywords">null</span>)
+                                                        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                        current.left = <span class="java-keywords">new</span> BTNode&lt;T&gt;(val);
+                                        current = current.left;
+
+                                        <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+
+                <span class="java-keywords">case</span> RightChild: <span class="java-keywords">if</span> (current.right != <span class="java-keywords">null</span>)
+                                                        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                                         current.right = <span class="java-keywords">new</span> BTNode&lt;T&gt; (val);
+                                         current = current.right;
+
+                                         <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+        }
+
+        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">retrieve</span> ()
+    {
+        <span class="java-keywords">return</span> current.data;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">update</span> (T val)
+    {
+        current.data = val;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">delete_subtree</span>()
+    {
+        <span class="java-keywords">if</span> (current == root)
+            current = root = <span class="java-keywords">null</span>;
+        <span class="java-keywords">else</span>
+        {
+            BTNode&lt;T&gt; p = current;
+            <span class="java-layer-method">find</span>(Relative.Parent);
+
+            <span class="java-keywords">if</span> (current.left == p)
+                current.left = <span class="java-keywords">null</span>;
+            <span class="java-keywords">else</span> 
+                current.right = <span class="java-keywords">null</span>;
+
+            current = root;
+        }
+    }
+    
+<span class="java-block-comment">///////////////////////////////////////////////////</span>
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">findMinKey</span>()
+    {
+        <span class="java-keywords">if</span> (root == <span class="java-keywords">null</span>)
+                <span class="java-keywords">return</span> <span class="java-keywords">null</span>;
+
+        T m = root.data;
+        <span class="java-keywords">return</span> <span class="java-layer-method">findMinKey</span>(root,m);
+    }
+
+    <span class="java-keywords">private</span> Integer <span class="java-layer-method">findMinKey</span>(BTNode&lt;T&gt; t,Integer minValue)
+    {
+        <span class="java-keywords">if</span> (t != <span class="java-keywords">null</span>)
+        {
+                minValue = <span class="java-layer-method">findMinKey</span>(t.left,minValue);
+                minValue = <span class="java-layer-method">findMinKey</span>(t.right,minValue);
+
+                <span class="java-keywords">if</span> (t.data &lt; minValue)
+                        minValue = t.data;
+        }
+
+        <span class="java-keywords">return</span> minValue;
+    }
+}</pre>
+
+</body>
+</html>

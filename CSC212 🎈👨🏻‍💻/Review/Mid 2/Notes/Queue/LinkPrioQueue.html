@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.java-keywords {color: #000099; font-family: Monospaced; font-weight: bold}
+.java-layer-method {font-family: Monospaced; font-weight: bold}
+.java-numeric-literals {color: #780000}
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> Priority
+{
+    <span class="java-keywords">int</span> value;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">Priority</span>(<span class="java-keywords">int</span> p)
+    {
+        value = p;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">get_value</span>()
+    {
+        <span class="java-keywords">return</span> value;
+    }
+   
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">set_value</span>(<span class="java-keywords">int</span> v) 
+    {
+        value = v;
+    }
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> PQNode&lt;T&gt;
+{
+    <span class="java-keywords">private</span> T data;
+    <span class="java-keywords">private</span> Priority priority;
+    <span class="java-keywords">public</span> PQNode&lt;T&gt; next;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">PQNode</span>()
+    {
+        next = <span class="java-keywords">null</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">PQNode</span>(T e, Priority p)
+    {
+        data = e;
+        priority = p;
+    }
+
+    <span class="java-keywords">public</span> Priority <span class="java-layer-method">get_priority</span>()
+    {
+        <span class="java-keywords">return</span> priority;
+    } 
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">get_data</span>()
+    {
+        <span class="java-keywords">return</span> data;
+    }
+    
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">set_priority</span>(Priority p)
+    {
+        priority = p;
+    }
+    
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">set_data</span>(T e)
+    {
+        data = e;
+    }
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> LinkPQ&lt;T&gt;
+{
+    <span class="java-keywords">private</span> <span class="java-keywords">int</span> size;
+    <span class="java-keywords">private</span> PQNode&lt;T&gt; head, tail;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">LinkPQ</span>()
+    {
+        head = tail = <span class="java-keywords">null</span>;
+        size = <span class="java-numeric-literals">0</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">length</span> ()
+    {
+        <span class="java-keywords">return</span> size;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">full</span> ()
+    {
+        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">enqueue</span>(T e, Priority pty)
+    {
+        PQNode&lt;T&gt; p, q, tmp;
+
+        <span class="java-keywords">if</span> ((size == <span class="java-numeric-literals">0</span>) || (pty.<span class="java-layer-method">get_value</span>() &gt; head.<span class="java-layer-method">get_priority</span>().<span class="java-layer-method">get_value</span>()))
+        {
+            tmp = <span class="java-keywords">new</span> PQNode&lt;T&gt;(e, pty);
+            tmp.next = head;
+            head = tmp;
+        }
+        <span class="java-keywords">else</span>
+        {
+            p = head;
+            q = <span class="java-keywords">null</span>;
+
+            <span class="java-keywords">while</span> (p != <span class="java-keywords">null</span> &amp;&amp; p.<span class="java-layer-method">get_priority</span>().<span class="java-layer-method">get_value</span>() &gt; pty.<span class="java-layer-method">get_value</span>())
+            {
+                q = p;
+                p = p.next;
+            }
+
+            tmp = <span class="java-keywords">new</span> PQNode&lt;T&gt;(e, pty);
+            tmp.next = p;
+            q.next = tmp;
+        }
+
+        size++;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">serve</span> (Priority pty)
+    {
+        T e = head.<span class="java-layer-method">get_data</span>();
+        pty.<span class="java-layer-method">set_value</span>(head.<span class="java-layer-method">get_priority</span>().<span class="java-layer-method">get_value</span>());
+        head = head.next;
+        size--;
+
+        <span class="java-keywords">return</span> e;
+    }    
+}
+</pre>
+</body>
+</html>

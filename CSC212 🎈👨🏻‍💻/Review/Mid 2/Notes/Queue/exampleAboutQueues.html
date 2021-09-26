@@ -1,0 +1,660 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.java-numeric-literals {color: #780000}
+.java-keywords {color: #000099; font-family: Monospaced; font-weight: bold}
+.java-layer-method {font-family: Monospaced; font-weight: bold}
+.java-string-literal {color: #99006b}
+.java-block-comment {color: #737373}
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> TestQueue 
+{
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+<span class="java-block-comment">//</span>      <span class="java-block-comment"> General functions</span>      
+<span class="java-block-comment">///////////////////////////////////////////////////////</span> 
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">copyQ</span>(LinkQueue&lt;Integer&gt; q1,LinkQueue&lt;Integer&gt; q2)
+                {
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">display</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                        {
+                                System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;Empty LinkQueue&lt;Integer&gt;&quot;</span>);
+                                <span class="java-keywords">return</span>;
+                        }
+                        
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);         
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;Queue contenets&quot;</span>);
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                System.out.<span class="java-layer-method">print</span>(temp + <span class="java-string-literal">&quot; &quot;</span>);
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        System.out.<span class="java-layer-method">println</span>();
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">displayReverse</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                        {
+                                System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;Empty Queue&quot;</span>);
+                                <span class="java-keywords">return</span>;
+                        }
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);         
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;Queue contenets&quot;</span>);
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);
+                        
+                        <span class="java-layer-method">reversedCopy</span>(q1,q2);
+                        
+                        <span class="java-keywords">while</span>(q2.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q2.<span class="java-layer-method">serve</span>();
+                                System.out.<span class="java-layer-method">print</span>(temp + <span class="java-string-literal">&quot; &quot;</span>);
+                        }
+                        
+                        System.out.<span class="java-layer-method">println</span>();
+                        System.out.<span class="java-layer-method">println</span>(<span class="java-string-literal">&quot;----------------&quot;</span>);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">reverse</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                <span class="java-layer-method">addFirst</span>(q2,temp);
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">reverseWithStack</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        LinkStack&lt;Integer&gt; s1 = <span class="java-keywords">new</span> LinkStack&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                s1.<span class="java-layer-method">push</span>(temp);
+                        }
+
+                        <span class="java-keywords">while</span>(! s1.<span class="java-layer-method">empty</span>())
+                        {
+                                temp = s1.<span class="java-layer-method">pop</span>();
+                                q1.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">reversedCopy</span>(LinkQueue&lt;Integer&gt; q1,LinkQueue&lt;Integer&gt; q2)
+                {
+                        <span class="java-keywords">int</span> temp;
+                        LinkQueue&lt;Integer&gt; q3 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q3.<span class="java-layer-method">enqueue</span>(temp);
+                                <span class="java-layer-method">addFirst</span>(q2,temp);
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q3,q1);
+                }
+                
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">copyLinkQueue</span>(LinkQueue&lt;Integer&gt; q1 , LinkQueue&lt;Integer&gt; q2)
+                {
+                        LinkQueue&lt;Integer&gt; q3 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-layer-method">copyQ</span>(q1,q3);
+                        
+                        <span class="java-keywords">while</span>(q3.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q3.<span class="java-layer-method">serve</span>();
+                                q1.<span class="java-layer-method">enqueue</span>(temp);
+                                q2.<span class="java-layer-method">enqueue</span>(temp);                       
+                        }
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">size</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        <span class="java-keywords">int</span> s = <span class="java-numeric-literals">0</span>;
+                        
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                s++;
+                                q2.<span class="java-layer-method">enqueue</span>(temp);                       
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        
+                        <span class="java-keywords">return</span> s;
+                }       
+
+                <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">search</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp;
+                        <span class="java-keywords">boolean</span> flag = <span class="java-keywords">false</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+
+                                <span class="java-keywords">if</span> (temp == target)
+                                        flag = <span class="java-keywords">true</span>;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">return</span> flag;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">searchIndex</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp;
+                        <span class="java-keywords">int</span> i = <span class="java-numeric-literals">0</span>;              
+                        <span class="java-keywords">int</span> loc = <span class="java-numeric-literals">0</span>;
+                        
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                i++;
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+
+                                <span class="java-keywords">if</span> (temp == target)
+                                        loc = i;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">return</span> loc;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">equalQueues</span>(LinkQueue&lt;Integer&gt; q1,LinkQueue&lt;Integer&gt; q2)
+                {
+                        <span class="java-keywords">if</span> (<span class="java-layer-method">size</span>(q1) != <span class="java-layer-method">size</span>(q2))
+                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+                        
+                        LinkQueue&lt;Integer&gt; q3 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        LinkQueue&lt;Integer&gt; q4 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp1,temp2;
+                        <span class="java-keywords">boolean</span> flag = <span class="java-keywords">true</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp1 = q1.<span class="java-layer-method">serve</span>();
+                                temp2 = q2.<span class="java-layer-method">serve</span>();
+
+                                q3.<span class="java-layer-method">enqueue</span>(temp1);
+                                q4.<span class="java-layer-method">enqueue</span>(temp2);
+
+                                <span class="java-keywords">if</span> (temp1 != temp2)
+                                        flag = <span class="java-keywords">false</span>;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q3,q1);
+                        <span class="java-layer-method">copyQ</span>(q4,q2);
+
+                        <span class="java-keywords">return</span> flag;
+                }
+                
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+<span class="java-block-comment">//</span>              <span class="java-block-comment"> Add functions</span>  
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+                
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addFirst</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> newData)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-layer-method">copyQ</span>(q1,q2);
+                        q1.<span class="java-layer-method">enqueue</span>(newData);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addAfterTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> newData,<span class="java-keywords">int</span> target)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        
+                        <span class="java-keywords">while</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                                
+                                <span class="java-keywords">if</span> (temp == target)
+                                        q2.<span class="java-layer-method">enqueue</span>(newData);
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+                
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addBeforeTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> newData,<span class="java-keywords">int</span> target)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        
+                        <span class="java-keywords">while</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                
+                                <span class="java-keywords">if</span> (temp == target)
+                                        q2.<span class="java-layer-method">enqueue</span>(newData);
+
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">addIndex</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> index,<span class="java-keywords">int</span> newData)
+                {
+                        <span class="java-keywords">int</span> s = <span class="java-layer-method">size</span>(q1);
+                        
+                        <span class="java-keywords">if</span> (index &lt; <span class="java-numeric-literals">1</span> &amp;&amp; index &gt; s)
+                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                        <span class="java-keywords">if</span> (index == s+<span class="java-numeric-literals">1</span>)
+                                q1.<span class="java-layer-method">enqueue</span>(newData);
+                        <span class="java-keywords">else</span>
+                        {
+                                LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                                <span class="java-keywords">int</span> i = <span class="java-numeric-literals">1</span>;
+
+                                <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                {
+                                        <span class="java-keywords">if</span> (i == index)
+                                                q2.<span class="java-layer-method">enqueue</span>(newData);
+
+                                        q2.<span class="java-layer-method">enqueue</span>(q1.<span class="java-layer-method">serve</span>());
+                                        
+                                        i++;
+                                }
+                                
+                                <span class="java-layer-method">copyQ</span>(q2,q1);
+                        }
+                        
+                        <span class="java-keywords">return</span> <span class="java-keywords">true</span>;
+                }
+                
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addSorted</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> newData)
+                {
+                        <span class="java-keywords">int</span> temp;
+                        
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                q1.<span class="java-layer-method">enqueue</span>(newData);
+                        <span class="java-keywords">else</span>
+                        {
+                                LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span> &amp;&amp; temp &lt; newData)
+                                {
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                                        temp = q1.<span class="java-layer-method">serve</span>();
+                                }
+
+                                <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span> &amp;&amp; temp &lt; newData)
+                                {
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                                        q2.<span class="java-layer-method">enqueue</span>(newData);
+                                }
+                                <span class="java-keywords">else</span>
+                                {
+                                        q2.<span class="java-layer-method">enqueue</span>(newData);
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                                        <span class="java-layer-method">copyQ</span>(q1,q2);
+                                }                       
+
+                                <span class="java-layer-method">copyQ</span>(q2,q1);
+                        }
+                }
+
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+<span class="java-block-comment">//</span>              <span class="java-block-comment"> Delete functions</span>       
+<span class="java-block-comment">///////////////////////////////////////////////////////</span> 
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">deleteLast</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+                        
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+                        
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                
+                                <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">return</span> temp;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">deleteAllTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">int</span> count = <span class="java-numeric-literals">0</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">if</span> (temp != target)
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                                <span class="java-keywords">else</span>
+                                        count++;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">return</span> count;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">deleteAfterTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+                        <span class="java-keywords">boolean</span> flag = <span class="java-keywords">false</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                                
+                                <span class="java-keywords">if</span> (temp == target)
+                                {       
+                                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                        {
+                                                temp = q1.<span class="java-layer-method">serve</span>();
+                                                flag = <span class="java-keywords">true</span>;                                    
+                                        }
+                                }
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+
+                        <span class="java-keywords">if</span> (flag)
+                                <span class="java-keywords">return</span> temp;
+                        <span class="java-keywords">else</span>
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;                       
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">deleteTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+                        <span class="java-keywords">boolean</span> found = <span class="java-keywords">false</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span> &amp;&amp; ! found)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">if</span> (temp == target)
+                                        found = <span class="java-keywords">true</span>;
+                                <span class="java-keywords">else</span>
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q1,q2);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+
+                        <span class="java-keywords">return</span> found;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">deleteByIndex</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> index)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span> || index &lt; <span class="java-numeric-literals">1</span> || index &gt; <span class="java-layer-method">size</span>(q1))
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+                        
+                        <span class="java-keywords">for</span> (<span class="java-keywords">int</span> i = <span class="java-numeric-literals">1</span> ; i &lt; index ; i++)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        temp = q1.<span class="java-layer-method">serve</span>();
+                        <span class="java-layer-method">copyQ</span>(q1,q2);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+
+                        <span class="java-keywords">return</span> temp;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">deleteLastOccurence</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> m)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+
+                        <span class="java-layer-method">reverseWithStack</span>(q1);
+                        <span class="java-keywords">boolean</span> found = <span class="java-layer-method">deleteTarget</span>(q1,m);
+                        <span class="java-layer-method">reverseWithStack</span>(q1);
+
+                        <span class="java-keywords">return</span> found;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">deleteBeforeTarget</span>(LinkQueue&lt;Integer&gt; q1,<span class="java-keywords">int</span> target)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();               
+                        <span class="java-keywords">int</span> i = <span class="java-numeric-literals">1</span>;
+                        <span class="java-keywords">int</span> temp2 = <span class="java-numeric-literals">0</span>,temp;
+                        <span class="java-keywords">boolean</span> flag = <span class="java-keywords">false</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span> &amp;&amp; ! flag)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">if</span> (temp == target)
+                                {
+                                         <span class="java-keywords">if</span>(i != <span class="java-numeric-literals">1</span>)
+                                                 temp2 = <span class="java-layer-method">deleteLast</span>(q2);
+
+                                         flag = <span class="java-keywords">true</span>;
+                                }
+                                
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                                i++;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q1,q2);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+
+                        <span class="java-keywords">return</span> temp2;
+                }
+                
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+<span class="java-block-comment">//</span>              <span class="java-block-comment"> Minimum and Maximum functions</span>  
+<span class="java-block-comment">//////////////////////////////////////////////////////</span>  <span class="java-block-comment">/</span>       
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">minimum</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> min = q1.<span class="java-layer-method">serve</span>();
+                        q2.<span class="java-layer-method">enqueue</span>(min);
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+
+                                <span class="java-keywords">if</span> (temp &lt; min)
+                                        min = temp;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+
+                        <span class="java-keywords">return</span> min;
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">maximum</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                <span class="java-keywords">return</span> <span class="java-numeric-literals">0</span>;
+
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        <span class="java-keywords">int</span> max = q1.<span class="java-layer-method">serve</span>();
+                        q2.<span class="java-layer-method">enqueue</span>(max);
+                        <span class="java-keywords">int</span> temp;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+
+                                <span class="java-keywords">if</span> (temp &gt; max)
+                                        max = temp;
+                        }
+
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">return</span> max;
+                }
+
+<span class="java-block-comment">///////////////////////////////////////////////////////</span>
+<span class="java-block-comment">//</span>              <span class="java-block-comment"> Exams functions</span>        
+<span class="java-block-comment">///////////////////////////////////////////////////////</span> 
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">sort</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+                        <span class="java-keywords">int</span> temp;
+                        
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = <span class="java-layer-method">minimum</span>(q1);
+                                <span class="java-layer-method">deleteTarget</span>(q1,temp);
+                                q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">swapFirstLast</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span> || <span class="java-layer-method">size</span>(q1) == <span class="java-numeric-literals">1</span>)
+                                <span class="java-keywords">return</span>;
+
+                        <span class="java-keywords">int</span> first = <span class="java-numeric-literals">0</span>,last = <span class="java-numeric-literals">0</span>;
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        first = q1.<span class="java-layer-method">serve</span>();
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                        last = temp;
+                                <span class="java-keywords">else</span>
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+                        
+                        q1.<span class="java-layer-method">enqueue</span>(last);
+                        <span class="java-layer-method">copyQ</span>(q2,q1);
+                        q1.<span class="java-layer-method">enqueue</span>(first);
+                }
+
+                <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">swapFirstLastDelete</span>(LinkQueue&lt;Integer&gt; q1)
+                {
+                        <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() == <span class="java-numeric-literals">0</span> || <span class="java-layer-method">size</span>(q1) == <span class="java-numeric-literals">1</span>)
+                                <span class="java-keywords">return</span>;
+
+                        <span class="java-keywords">int</span> first = <span class="java-numeric-literals">0</span>,last = <span class="java-numeric-literals">0</span>;
+                        LinkQueue&lt;Integer&gt; q2 = <span class="java-keywords">new</span> LinkQueue&lt;Integer&gt;();
+
+                        first = q1.<span class="java-layer-method">serve</span>();
+                        <span class="java-keywords">int</span> temp = <span class="java-numeric-literals">0</span>;
+
+                        <span class="java-keywords">while</span>(q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                        {
+                                temp = q1.<span class="java-layer-method">serve</span>();
+
+                                <span class="java-keywords">if</span> (q1.<span class="java-layer-method">length</span>() != <span class="java-numeric-literals">0</span>)
+                                        last = temp;
+                                <span class="java-keywords">else</span>
+                                        q2.<span class="java-layer-method">enqueue</span>(temp);
+                        }
+
+                        <span class="java-keywords">if</span> (first == last)
+                                <span class="java-layer-method">copyQ</span>(q2,q1);
+                        <span class="java-keywords">else</span>
+                        {
+                                q1.<span class="java-layer-method">enqueue</span>(last);
+                                <span class="java-layer-method">copyQ</span>(q2,q1);
+                                q1.<span class="java-layer-method">enqueue</span>(first);
+                        }
+                }
+}</pre>
+
+</body>
+</html>

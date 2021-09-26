@@ -1,0 +1,130 @@
+public static<T> void print(Stack<T> s) {
+        Stack<T> s2 = new Stack<T>();
+ 
+        while (!s.emtpy()) {
+                T x = s.pop();
+                sop(x);
+                s2.push(x);
+        }
+ 
+        while (!s2.empty()) {
+                T x = s2.pop();
+                s.push(x);
+        }
+}
+ 
+public static<T> boolean find(Stack<T> s, T e) {
+        Stack<T> s2 = new Stack<T>();
+        boolean found = false;
+ 
+        while (!s.emtpy()) {
+                T x = s.pop();
+                if (e.equals(x))
+                        found = true;
+                s2.push(x);
+        }
+ 
+        while (!s2.empty()) {
+                T x = s2.pop();
+                s.push(x);
+        }
+ 
+        return found;
+}
+ 
+public static<T> void replace(Stack<T> s, T a, T b) {
+        Stack<T> s2 = new Stack<T>();
+ 
+        while (!s.emtpy()) {
+                T x = s.pop();
+                if (a.eqauls(x))
+                        s2.push(b);
+                else
+                        s2.push(x);
+        }
+ 
+        while (!s2.empty()) {
+                T x = s2.pop();
+                s.push(x);
+        }
+}
+ 
+public static<T> int count(Stack<T> s) {
+        Stack<T> s2 = new Stack<T>();
+        int n = 0;
+ 
+        while (!s.emtpy()) {
+                T x = s.pop();
+                n++;
+                s2.push(x);
+        }
+ 
+        while (!s2.empty()) {
+                T x = s2.pop();
+                s.push(x);
+        }
+ 
+        return n;
+}
+ 
+public static<T> Stack<T> topHalf(Stack<T> s) {
+        Stack<T> s2 = new Stack<T>();
+        Stack<T> result = new Stack<T>();
+ 
+        int n = count(s);
+ 
+        while (!s.empty()) {
+                T x = s.pop();
+                s2.push(x);
+        }
+ 
+        int i = 0;
+        while (!s2.empty()) {
+                T x = s2.pop();
+                if (i >= n / 2)
+                        result.push(x);
+                s.push(x);
+                i++;
+        }
+ 
+        return result;
+}
+ 
+// LinkedList (top-bottom)
+public void print() {
+        Node<T> tmp = top;
+        while (tmp != null) {
+                sop(tmp.data);
+                tmp = tmp.next;
+        }
+}
+ 
+// LinkedList (bottom-top)
+public void print() {
+        Stack<T> st = new Stack<T>();
+       
+        Node<T> tmp = top;
+        while (tmp != null) {
+                st.push(tmp.data);
+                tmp = tmp.next;
+        }
+ 
+        while (!st.empty()) {
+                T x = s.pop();
+                sop(x);
+        }
+}
+ 
+// ArrayList (top-bottom)
+public void print() {
+        for (int i = top; i > -1; i--) {
+                sop(nodes[i]);
+        }
+}
+ 
+// ArrayList (bottom-top)
+public void print() {
+        for (int i = 0; i <= top; i++) {
+                sop(nodes[i]);
+        }
+}
