@@ -1,0 +1,141 @@
+public int findMaxKey() {
+        Node<T> n = root;
+ 
+        while (n.right != null) {
+                n = n.right;
+        }
+ 
+        return n.key;
+}
+ 
+public int findMaxKey(BSTNode<T> n) {
+        while (n.right != null) {
+                n = n.right;
+        }
+ 
+        return n.key;
+}
+ 
+public int findMaxKey() {
+        return findMaxKey(root);
+}
+ 
+public int findMaxKey(BSTNode<T> n) {
+        if (n.right != null) {
+                return findMaxKey(n.right);
+        } else {
+                return n.key;
+        }
+}
+ 
+public int findMinKey() {
+        Node<T> n = root;
+ 
+        while (n.left != null) {
+                n = n.left;
+        }
+ 
+        return n.key;
+}
+ 
+public int findMinKey(BSTNode<T> n) {
+        if (n.left != null) {
+                return findMinKey(n.left);
+        } else {
+                return n.key;
+        }
+}
+ 
+public int countOneChild() {
+        return countOneChild(root);
+}
+ 
+private int countOneChild(BSTNode<T> n) {
+        if (n == null)
+                return 0;
+        else if (n.left == null && n.right != null)
+                return 1 + countOneChild(n.right);
+        else if (n.left != null && n.right == null)
+                return 1 + countOneChild(n.left);
+        else
+                return countOneChild(n.left) + countOneChild(n.right);
+}
+ 
+public void printKeysAsc() {
+        printKeysAsc(root);
+}
+ 
+private void printKeysAsc(BSTNode<T> n) {
+        if (n != null) {
+                printKeysAsc(n.left);
+                sop(n.key);
+                printKeysAsc(n.right);
+        }
+}
+ 
+public void printKeysDsc() {
+        printKeysDsc(root);
+}
+ 
+private void printKeysDsc(BSTNode<T> n) {
+        if (n != null) {
+                printKeysDsc(n.right);
+                sop(n.key);
+                printKeysDsc(n.left);
+        }
+}
+ 
+// Member of BST
+public int range() {
+        Node<T> n = root;
+ 
+        while (n.left != null) {
+                n = n.left;
+        }
+ 
+        int min = n.key;
+ 
+        n = root;
+        while (n.right != null) {
+                n = n.right;
+        }
+ 
+        int max = n.key;
+ 
+        return max - min;
+}
+ 
+public boolean inRange(int k) {
+        Node<T> n = root;
+ 
+        while (n.left != null) {
+                n = n.left;
+        }
+ 
+        int min = n.key;
+ 
+        n = root;
+        while (n.right != null) {
+                n = n.right;
+        }
+ 
+        int max = n.key;
+ 
+        return min <= k && k <= max;
+}
+ 
+// BST (recursive)
+public List<T> rangeFind(int k1, int k2) {
+        List<T> l = new List<T>();
+        rangeFind(root, k1, k2, l);
+        return l;
+}
+ 
+private void rangeFind(BSTNode<T> n, int k1, int k2, List<T> l) {
+        if (n != null) {
+                rangeFind(n.left, k1, k2, l);
+                if (k1 <= n.key && n.key <= k2)
+                        l.insert(n.data);
+                rangeFind(n.right, k1, k2, l);
+        }
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.java-numeric-literals {color: #780000}
+.java-keywords {color: #000099; font-family: Monospaced; font-weight: bold}
+.java-layer-method {font-family: Monospaced; font-weight: bold}
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> Node&lt;T&gt;
+{
+    <span class="java-keywords">public</span> T data;
+    <span class="java-keywords">public</span> Node&lt;T&gt; next;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">Node</span>()
+    {
+        data = <span class="java-keywords">null</span>;
+        next = <span class="java-keywords">null</span>;
+    }
+   
+    <span class="java-keywords">public</span> <span class="java-layer-method">Node</span>(T val)
+    {
+        data = val;
+        next = <span class="java-keywords">null</span>;
+    }
+}
+</pre>
+<hr>
+<pre>
+<span class="java-keywords">package</span> ADT;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> Dequeue&lt;T&gt;
+{
+    <span class="java-keywords">private</span> Node&lt;T&gt; head,tail;
+    <span class="java-keywords">private</span> <span class="java-keywords">int</span> size;
+
+    <span class="java-keywords">public</span> <span class="java-layer-method">Dequeue</span>()
+    {
+        head = tail = <span class="java-keywords">null</span>;
+        size = <span class="java-numeric-literals">0</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">full</span>()
+    {
+        <span class="java-keywords">return</span> <span class="java-keywords">false</span>;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">length</span> ()
+    {
+        <span class="java-keywords">return</span> size;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addFirst</span>(T e)
+    {
+        Node&lt;T&gt; temp = <span class="java-keywords">new</span> Node&lt;T&gt;(e);
+        temp.next = head;
+        head = temp;
+
+        <span class="java-keywords">if</span> (size == <span class="java-numeric-literals">0</span>)
+                tail = temp;
+
+        size++;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">void</span> <span class="java-layer-method">addLast</span>(T e)
+    {
+        <span class="java-keywords">if</span> (tail == <span class="java-keywords">null</span>)
+            head = tail = <span class="java-keywords">new</span> Node&lt;T&gt;(e);
+        <span class="java-keywords">else</span>
+        {
+            tail.next = <span class="java-keywords">new</span> Node&lt;T&gt;(e);
+            tail = tail.next;
+        }
+
+        size++;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">removeFirst</span>()
+    {
+        T x = head.data;
+        head = head.next;
+        size--;
+
+        <span class="java-keywords">if</span> (size == <span class="java-numeric-literals">0</span>)
+                tail = <span class="java-keywords">null</span>;
+
+        size--;
+
+        <span class="java-keywords">return</span> x;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">removeLast</span>()
+    {
+        T x = tail.data;
+
+        <span class="java-keywords">if</span> (size == <span class="java-numeric-literals">1</span>)
+            head = tail = <span class="java-keywords">null</span>;
+        <span class="java-keywords">else</span>
+        {
+            Node&lt;T&gt; prev = head;
+
+            <span class="java-keywords">while</span>(prev.next != tail)
+                    prev = prev.next;
+
+            prev.next = <span class="java-keywords">null</span>;
+            tail = prev;
+        }
+
+        size--;
+
+        <span class="java-keywords">return</span> x;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">getFirst</span>()
+    {
+        <span class="java-keywords">return</span> head.data;
+    }
+
+    <span class="java-keywords">public</span> T <span class="java-layer-method">getLast</span>()
+    {
+        <span class="java-keywords">return</span> tail.data;
+    }
+
+    <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">isEmpty</span>()
+    {
+        <span class="java-keywords">return</span> size == <span class="java-numeric-literals">0</span>;
+    }
+}
+</pre>
+</body>
+</html>

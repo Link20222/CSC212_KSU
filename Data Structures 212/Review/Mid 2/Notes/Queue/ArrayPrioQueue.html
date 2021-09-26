@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Priority Queue</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.java-numeric-literals {color: #780000}
+.java-keywords {color: #000099; font-family: Monospaced; font-weight: bold}
+.java-layer-method {font-family: Monospaced; font-weight: bold}
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="java-keywords">package</span> prioQueue;
+
+<span class="java-keywords">public</span> <span class="java-keywords">class</span> ArrayPQ&lt;T&gt;
+{
+        <span class="java-keywords">private</span> <span class="java-keywords">int</span> size;
+        <span class="java-keywords">public</span>  <span class="java-keywords">int</span> head,tail;
+        <span class="java-keywords">private</span> <span class="java-keywords">int</span> maxSize;
+        <span class="java-keywords">private</span> PElementArray&lt;T&gt; nodes[];
+
+        <span class="java-keywords">public</span> <span class="java-layer-method">ArrayPQ</span>(<span class="java-keywords">int</span> n)
+        {
+                maxSize = n;
+                size = <span class="java-numeric-literals">0</span>;
+                head = <span class="java-numeric-literals">0</span>;
+                tail = <span class="java-numeric-literals">0</span>;
+                nodes = <span class="java-keywords">new</span> PElementArray[n];
+        }
+
+        <span class="java-keywords">public</span> <span class="java-keywords">int</span> <span class="java-layer-method">length</span>()
+        {
+                <span class="java-keywords">return</span> size;
+        }
+
+        <span class="java-keywords">int</span> <span class="java-layer-method">inc</span>(<span class="java-keywords">int</span> a)
+        {
+		<span class="java-keywords">return</span> (a+<span class="java-numeric-literals">1</span>)% maxSize;
+        }
+
+        <span class="java-keywords">int</span> <span class="java-layer-method">dec</span>(<span class="java-keywords">int</span> a)
+        {
+                <span class="java-keywords">if</span> (a == <span class="java-numeric-literals">0</span>) 
+                        <span class="java-keywords">return</span> maxSize;
+                <span class="java-keywords">else</span> 
+                        <span class="java-keywords">return</span> a-<span class="java-numeric-literals">1</span>;
+        }
+
+        <span class="java-keywords">public</span> <span class="java-keywords">boolean</span> <span class="java-layer-method">full</span>()
+        {
+                <span class="java-keywords">return</span> size == maxSize;
+        }
+        
+    
+        <span class="java-keywords">void</span> <span class="java-layer-method">enqueue</span>(T e, Priority pty)
+        {
+                <span class="java-keywords">if</span> (<span class="java-layer-method">full</span>())
+                        <span class="java-keywords">return</span>;
+                <span class="java-keywords">else</span>
+                {
+                        <span class="java-keywords">int</span> loc = head;
+                        <span class="java-keywords">int</span> all = <span class="java-layer-method">length</span>();
+                        <span class="java-keywords">boolean</span> stop = <span class="java-keywords">false</span>;
+                        <span class="java-keywords">int</span> k;
+
+                        <span class="java-keywords">while</span> (all != <span class="java-numeric-literals">0</span> &amp;&amp; !stop)
+                        {
+                                <span class="java-keywords">if</span> (nodes[loc].<span class="java-layer-method">getPriority</span>().<span class="java-layer-method">get_value</span>() &gt; pty.<span class="java-layer-method">get_value</span>())
+                                        stop = <span class="java-keywords">true</span>;
+                                <span class="java-keywords">else</span>
+                                {
+                                        all--;
+                                        loc = <span class="java-layer-method">inc</span>(loc);
+                                }
+                        }
+
+                        <span class="java-keywords">for</span> (<span class="java-keywords">int</span> j = <span class="java-layer-method">inc</span>(tail); j != loc; j = <span class="java-layer-method">dec</span>(j))
+                        {
+                                k = <span class="java-layer-method">dec</span>(j);
+                                nodes[j] = nodes[k];
+                        }
+
+                        nodes[loc] = <span class="java-keywords">new</span> PElementArray&lt;T&gt;(e, pty);
+                        size++;
+                        tail = <span class="java-layer-method">inc</span>(tail);
+                }
+        }
+
+        <span class="java-keywords">public</span> T <span class="java-layer-method">serve</span>(Priority pty)
+        {
+                T e = nodes[head].<span class="java-layer-method">getData</span>();
+                pty.<span class="java-layer-method">set_value</span>(nodes[head].<span class="java-layer-method">getPriority</span>().<span class="java-layer-method">get_value</span>());
+
+                head = (head + <span class="java-numeric-literals">1</span>) % maxSize;
+                size--;
+
+                <span class="java-keywords">return</span> e;
+        }
+}</pre>
+
+</body>
+</html>
